@@ -100,9 +100,15 @@ def module_update(inst, point, var, num):
 
     inst.freeList += need_removal
 
+    # poping the elements from active list will lead to index shift
+    index_pop = []
     for index, item in enumerate(inst.activeList):
         if item in need_removal:
-            inst.activeList.pop(index)
+            index_pop.append(index)
+    # sort the list in reverse order so that the index shift does not affect the poping
+    index_pop.sort(reverse=True)
+    for index in index_pop:
+        inst.activeList.pop(index)
 
 
 # This is a MODULE level report function. The function is called by
